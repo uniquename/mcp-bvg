@@ -9,7 +9,6 @@
     "dev": "tsc --watch",
     "start": "node build/index.js",
     "prepare": "npm run build",
-    "test": "node examples.js",
     "clean": "rm -rf build"
   },
   "keywords": [
