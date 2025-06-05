@@ -22,7 +22,7 @@ export type LocationsSearchParams = z.infer<typeof LocationsSearchSchema>;
  */
 export const locationsSearchTool: Tool = {
   name: 'bvg_locations_search',
-  description: 'Search for stops, addresses, and points of interest in Berlin using the BVG API',
+  description: 'Search for stops, addresses, and points of interest in Berlin using the BVG API. Use this tool to find stop IDs by station name for other tools that require stopId parameters.',
   inputSchema: {
     type: 'object',
     properties: {

@@ -7,9 +7,9 @@ import { bvgApi } from '../utils/api.js';
  * Schema for journey planning parameters
  */
 export const JourneyPlanSchema = z.object({
-  from: z.string().min(1).describe('Origin location (stop ID, address, or coordinates)'),
-  to: z.string().min(1).describe('Destination location (stop ID, address, or coordinates)'),
-  via: z.string().optional().describe('Via location (stop ID, address, or coordinates)'),
+  from: z.string().min(1).describe('Origin location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)'),
+  to: z.string().min(1).describe('Destination location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)'),
+  via: z.string().optional().describe('Via location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)'),
   departure: z.string().optional().describe('Departure time in ISO format (default: now)'),
   arrival: z.string().optional().describe('Arrival time in ISO format (alternative to departure)'),
   results: z.number().min(1).max(6).default(3).describe('Number of journey alternatives'),
@@ -37,17 +37,17 @@ export const journeyPlanTool: Tool = {
     properties: {
       from: {
         type: 'string',
-        description: 'Origin location (stop ID, address, or coordinates)',
+        description: 'Origin location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)',
         minLength: 1
       },
       to: {
         type: 'string',
-        description: 'Destination location (stop ID, address, or coordinates)',
+        description: 'Destination location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)',
         minLength: 1
       },
       via: {
         type: 'string',
-        description: 'Via location (stop ID, address, or coordinates)'
+        description: 'Via location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)'
       },
       departure: {
         type: 'string',

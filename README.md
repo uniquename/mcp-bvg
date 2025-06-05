@@ -52,18 +52,33 @@ npm start
 
 ### Configuration for Claude Desktop
 
-Add this to your Claude Desktop configuration:
+Add this to your Claude Desktop configuration file (`~/Library/Application Support/Claude/claude_desktop_config.json` on macOS):
 
 ```json
 {
   "mcpServers": {
     "bvg-transport": {
       "command": "node",
-      "args": ["/path/to/bvg-mcp-server/build/index.js"]
+      "args": ["/absolute/path/to/bvg-mcp-server/build/index.js"]
     }
   }
 }
 ```
+
+### Configuration for VS Code
+
+This project includes VS Code configuration files in the `.vscode` directory:
+
+- **Tasks**: Build, watch, start server, and test examples
+- **Launch configurations**: Debug the MCP server and examples
+- **Settings**: TypeScript and editor preferences
+- **MCP Config**: Ready-to-use MCP server configuration
+
+To use with VS Code:
+1. Open the project folder in VS Code
+2. Use `Cmd+Shift+P` → "Tasks: Run Task" to access build tasks
+3. Use `F5` to debug the MCP server
+4. The MCP configuration is available in `.vscode/mcp-config.json`
 
 ## Example Queries
 

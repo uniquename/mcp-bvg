@@ -7,7 +7,7 @@ import { bvgApi, validateStopId } from '../utils/api.js';
  * Schema for stop details parameters
  */
 export const StopDetailsSchema = z.object({
-  stopId: z.string().min(1).describe('Unique identifier of the stop'),
+  stopId: z.string().min(1).describe('Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)'),
   linesOfStops: z.boolean().default(false).describe('Include lines that serve this stop'),
   language: z.enum(['de', 'en']).default('en').describe('Language for results')
 });
@@ -18,7 +18,7 @@ export type StopDetailsParams = z.infer<typeof StopDetailsSchema>;
  * Schema for stop departures/arrivals parameters
  */
 export const StopDeparturesSchema = z.object({
-  stopId: z.string().min(1).describe('Unique identifier of the stop'),
+  stopId: z.string().min(1).describe('Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)'),
   when: z.string().optional().describe('Date and time in ISO format (default: now)'),
   duration: z.number().min(1).max(1440).default(120).describe('Show departures for the next n minutes'),
   results: z.number().min(1).max(100).default(10).describe('Maximum number of results'),
@@ -40,7 +40,7 @@ export const stopDetailsTool: Tool = {
     properties: {
       stopId: {
         type: 'string',
-        description: 'Unique identifier of the stop',
+        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
         minLength: 1
       },
       linesOfStops: {
@@ -70,7 +70,7 @@ export const stopDeparturesTool: Tool = {
     properties: {
       stopId: {
         type: 'string',
-        description: 'Unique identifier of the stop',
+        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
         minLength: 1
       },
       when: {
@@ -124,7 +124,7 @@ export const stopArrivalsTool: Tool = {
     properties: {
       stopId: {
         type: 'string',
-        description: 'Unique identifier of the stop',
+        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
         minLength: 1
       },
       when: {
