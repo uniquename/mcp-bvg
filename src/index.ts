@@ -50,7 +50,7 @@ import {
 function createServer(): Server {
   const server = new Server(
     {
-      name: 'bvg-mcp-server',
+      name: 'mcp-bvg-server',
       version: '1.0.0',
     },
     {

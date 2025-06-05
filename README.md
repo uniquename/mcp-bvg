@@ -27,7 +27,7 @@ This MCP server provides the following tools:
 1. Clone the repository:
 ```bash
 git clone <repository-url>
-cd bvg-mcp-server
+cd mcp-bvg
 ```
 
 2. Install dependencies:
@@ -59,7 +59,7 @@ Add this to your Claude Desktop configuration file (`~/Library/Application Suppo
   "mcpServers": {
     "bvg-transport": {
       "command": "node",
-      "args": ["/absolute/path/to/bvg-mcp-server/build/index.js"]
+      "args": ["/absolute/path/to/mcp-bvg/build/index.js"]
     }
   }
 }

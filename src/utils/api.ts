@@ -34,7 +34,7 @@ export class BvgApiClient {
       const response = await fetch(url.toString(), {
         headers: {
           'Accept': 'application/json',
-          'User-Agent': 'bvg-mcp-server/1.0.0'
+          'User-Agent': 'mcp-bvg-server/1.0.0'
         }
       });
 
