@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { Trip, RadarResult } from '../types/bvg.js';
 import { bvgApi } from '../utils/api.js';
+import { createMcpTool } from '../utils/schema.js';
 
 /**
  * Schema for trip details parameters
@@ -36,103 +37,20 @@ export type RadarParams = z.infer<typeof RadarSchema>;
 /**
  * MCP tool for getting trip details
  */
-export const tripDetailsTool: Tool = {
-  name: 'bvg_trip_details',
-  description: 'Get detailed information about a specific trip by ID',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      tripId: {
-        type: 'string',
-        description: 'Unique identifier of the trip',
-        minLength: 1
-      },
-      lineName: {
-        type: 'string',
-        description: 'Line name for additional context'
-      },
-      stopovers: {
-        type: 'boolean',
-        description: 'Include stopovers for the trip',
-        default: true
-      },
-      polyline: {
-        type: 'boolean',
-        description: 'Include geographic polyline',
-        default: false
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['tripId']
-  }
-};
+export const tripDetailsTool: Tool = createMcpTool(
+  'bvg_trip_details',
+  'Get detailed information about a specific trip by ID',
+  TripDetailsSchema
+);
 
 /**
  * MCP tool for radar search
  */
-export const radarTool: Tool = {
-  name: 'bvg_radar',
-  description: 'Find vehicles in a geographic area with movement data',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      north: {
-        type: 'number',
-        description: 'Northern boundary latitude'
-      },
-      west: {
-        type: 'number',
-        description: 'Western boundary longitude'
-      },
-      south: {
-        type: 'number',
-        description: 'Southern boundary latitude'
-      },
-      east: {
-        type: 'number',
-        description: 'Eastern boundary longitude'
-      },
-      results: {
-        type: 'number',
-        description: 'Maximum number of vehicles to return (1-256)',
-        minimum: 1,
-        maximum: 256,
-        default: 256
-      },
-      duration: {
-        type: 'number',
-        description: 'Compute frames for the next n seconds (1-30)',
-        minimum: 1,
-        maximum: 30,
-        default: 30
-      },
-      frames: {
-        type: 'number',
-        description: 'Number of frames to compute (1-20)',
-        minimum: 1,
-        maximum: 20,
-        default: 3
-      },
-      polylines: {
-        type: 'boolean',
-        description: 'Include polylines for vehicle movements',
-        default: true
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['north', 'west', 'south', 'east']
-  }
-};
+export const radarTool: Tool = createMcpTool(
+  'bvg_radar',
+  'Find vehicles in a geographic area with movement data',
+  RadarSchema
+);
 
 /**
  * Execute trip details lookup

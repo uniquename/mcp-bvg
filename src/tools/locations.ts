@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { Location } from '../types/bvg.js';
 import { bvgApi } from '../utils/api.js';
+import { createMcpTool } from '../utils/schema.js';
 
 /**
  * Schema for locations search parameters
@@ -20,49 +21,11 @@ export type LocationsSearchParams = z.infer<typeof LocationsSearchSchema>;
 /**
  * MCP tool for searching locations
  */
-export const locationsSearchTool: Tool = {
-  name: 'bvg_locations_search',
-  description: 'Search for stops, addresses, and points of interest in Berlin using the BVG API. Use this tool to find stop IDs by station name for other tools that require stopId parameters.',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      query: {
-        type: 'string',
-        description: 'Search query for locations (stops, addresses, POIs)',
-        minLength: 1
-      },
-      results: {
-        type: 'number',
-        description: 'Maximum number of results to return (1-100)',
-        minimum: 1,
-        maximum: 100,
-        default: 10
-      },
-      addresses: {
-        type: 'boolean',
-        description: 'Include addresses in search',
-        default: true
-      },
-      poi: {
-        type: 'boolean',
-        description: 'Include points of interest in search',
-        default: true
-      },
-      linesOfStops: {
-        type: 'boolean',
-        description: 'Include lines that serve returned stops',
-        default: false
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['query']
-  }
-};
+export const locationsSearchTool: Tool = createMcpTool(
+  'bvg_locations_search',
+  'Search for stops, addresses, and points of interest in Berlin using the BVG API. Use this tool to find stop IDs by station name for other tools that require stopId parameters.',
+  LocationsSearchSchema
+);
 
 /**
  * Execute locations search

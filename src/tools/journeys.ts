@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { Journey } from '../types/bvg.js';
 import { bvgApi } from '../utils/api.js';
+import { createMcpTool } from '../utils/schema.js';
 
 /**
  * Schema for journey planning parameters
@@ -29,98 +30,11 @@ export type JourneyPlanParams = z.infer<typeof JourneyPlanSchema>;
 /**
  * MCP tool for journey planning
  */
-export const journeyPlanTool: Tool = {
-  name: 'bvg_journey_plan',
-  description: 'Plan journeys from A to B using Berlin public transport',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      from: {
-        type: 'string',
-        description: 'Origin location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)',
-        minLength: 1
-      },
-      to: {
-        type: 'string',
-        description: 'Destination location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)',
-        minLength: 1
-      },
-      via: {
-        type: 'string',
-        description: 'Via location (stop ID, address, or coordinates - use bvg_locations_search to find stop IDs by station name)'
-      },
-      departure: {
-        type: 'string',
-        description: 'Departure time in ISO format (default: now)',
-        format: 'date-time'
-      },
-      arrival: {
-        type: 'string',
-        description: 'Arrival time in ISO format (alternative to departure)',
-        format: 'date-time'
-      },
-      results: {
-        type: 'number',
-        description: 'Number of journey alternatives (1-6)',
-        minimum: 1,
-        maximum: 6,
-        default: 3
-      },
-      stopovers: {
-        type: 'boolean',
-        description: 'Include stopovers for each journey leg',
-        default: false
-      },
-      transfers: {
-        type: 'number',
-        description: 'Maximum number of transfers (-1 for unlimited)',
-        minimum: -1,
-        maximum: 10,
-        default: -1
-      },
-      transferTime: {
-        type: 'number',
-        description: 'Minimum transfer time in minutes (0-60)',
-        minimum: 0,
-        maximum: 60,
-        default: 0
-      },
-      accessibility: {
-        type: 'string',
-        enum: ['partial', 'complete'],
-        description: 'Accessibility requirements'
-      },
-      bike: {
-        type: 'boolean',
-        description: 'Allow taking a bike',
-        default: false
-      },
-      walkingSpeed: {
-        type: 'string',
-        enum: ['slow', 'normal', 'fast'],
-        description: 'Walking speed preference',
-        default: 'normal'
-      },
-      startWithWalking: {
-        type: 'boolean',
-        description: 'Allow walking to first stop',
-        default: true
-      },
-      endWithWalking: {
-        type: 'boolean',
-        description: 'Allow walking from last stop',
-        default: true
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['from', 'to']
-  }
-};
+export const journeyPlanTool: Tool = createMcpTool(
+  'bvg_journey_plan',
+  'Plan journeys from A to B using Berlin public transport',
+  JourneyPlanSchema
+);
 
 /**
  * Execute journey planning

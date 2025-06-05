@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { Tool } from '@modelcontextprotocol/sdk/types.js';
 import { Stop, Departure, Arrival } from '../types/bvg.js';
 import { bvgApi, validateStopId } from '../utils/api.js';
+import { createMcpTool } from '../utils/schema.js';
 
 /**
  * Schema for stop details parameters
@@ -32,140 +33,29 @@ export type StopDeparturesParams = z.infer<typeof StopDeparturesSchema>;
 /**
  * MCP tool for getting stop details
  */
-export const stopDetailsTool: Tool = {
-  name: 'bvg_stop_details',
-  description: 'Get detailed information about a specific stop or station',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      stopId: {
-        type: 'string',
-        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
-        minLength: 1
-      },
-      linesOfStops: {
-        type: 'boolean',
-        description: 'Include lines that serve this stop',
-        default: false
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['stopId']
-  }
-};
+export const stopDetailsTool: Tool = createMcpTool(
+  'bvg_stop_details',
+  'Get detailed information about a specific stop or station',
+  StopDetailsSchema
+);
 
 /**
  * MCP tool for getting stop departures
  */
-export const stopDeparturesTool: Tool = {
-  name: 'bvg_stop_departures',
-  description: 'Get upcoming departures at a specific stop or station',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      stopId: {
-        type: 'string',
-        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
-        minLength: 1
-      },
-      when: {
-        type: 'string',
-        description: 'Date and time in ISO format (default: now)',
-        format: 'date-time'
-      },
-      duration: {
-        type: 'number',
-        description: 'Show departures for the next n minutes (1-1440)',
-        minimum: 1,
-        maximum: 1440,
-        default: 120
-      },
-      results: {
-        type: 'number',
-        description: 'Maximum number of results (1-100)',
-        minimum: 1,
-        maximum: 100,
-        default: 10
-      },
-      linesOfStops: {
-        type: 'boolean',
-        description: 'Include lines that serve this stop',
-        default: false
-      },
-      remarks: {
-        type: 'boolean',
-        description: 'Include remarks and alerts',
-        default: true
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['stopId']
-  }
-};
+export const stopDeparturesTool: Tool = createMcpTool(
+  'bvg_stop_departures',
+  'Get upcoming departures at a specific stop or station',
+  StopDeparturesSchema
+);
 
 /**
  * MCP tool for getting stop arrivals
  */
-export const stopArrivalsTool: Tool = {
-  name: 'bvg_stop_arrivals',
-  description: 'Get upcoming arrivals at a specific stop or station',
-  inputSchema: {
-    type: 'object',
-    properties: {
-      stopId: {
-        type: 'string',
-        description: 'Unique identifier of the stop (not the station name - use bvg_locations_search to find stop IDs by station name)',
-        minLength: 1
-      },
-      when: {
-        type: 'string',
-        description: 'Date and time in ISO format (default: now)',
-        format: 'date-time'
-      },
-      duration: {
-        type: 'number',
-        description: 'Show arrivals for the next n minutes (1-1440)',
-        minimum: 1,
-        maximum: 1440,
-        default: 120
-      },
-      results: {
-        type: 'number',
-        description: 'Maximum number of results (1-100)',
-        minimum: 1,
-        maximum: 100,
-        default: 10
-      },
-      linesOfStops: {
-        type: 'boolean',
-        description: 'Include lines that serve this stop',
-        default: false
-      },
-      remarks: {
-        type: 'boolean',
-        description: 'Include remarks and alerts',
-        default: true
-      },
-      language: {
-        type: 'string',
-        enum: ['de', 'en'],
-        description: 'Language for results',
-        default: 'en'
-      }
-    },
-    required: ['stopId']
-  }
-};
+export const stopArrivalsTool: Tool = createMcpTool(
+  'bvg_stop_arrivals',
+  'Get upcoming arrivals at a specific stop or station',
+  StopDeparturesSchema
+);
 
 /**
  * Execute stop details lookup
