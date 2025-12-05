@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/uniquename-mcp-bvg-badge.png)](https://mseep.ai/app/uniquename-mcp-bvg)
+
 # BVG MCP Server
 
 A Model Context Protocol (MCP) server for interacting with the BVG (Berlin Public Transport) API. This server provides tools to search for locations, plan journeys, get real-time departures/arrivals, and more.
